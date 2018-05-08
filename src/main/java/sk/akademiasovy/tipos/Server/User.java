@@ -1,10 +1,7 @@
-package sk.akademiasovy.tipos.server;
+package sk.akademiasovy.tipos.Server;
 
 import java.util.Random;
 
-/**
- * Created by host on 20.2.2018.
- */
 public class User {
     private String firstname;
     private String lastname;

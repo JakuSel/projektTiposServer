@@ -1,7 +1,7 @@
-package sk.akademiasovy.tipos.server.resources;
+package sk.akademiasovy.tipos.Server.resources;
 
-import sk.akademiasovy.tipos.server.Draw_Number;
-import sk.akademiasovy.tipos.server.db.MySQL;
+import sk.akademiasovy.tipos.Server.Draw_Number;
+import sk.akademiasovy.tipos.Server.db.MySQL;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,9 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by host on 6.3.2018.
- */
+
 @Path("/draw/{id}")
 public class Draws {
 

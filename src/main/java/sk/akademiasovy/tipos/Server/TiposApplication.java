@@ -1,12 +1,12 @@
-package sk.akademiasovy.tipos.server;
+package sk.akademiasovy.tipos.Server;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
-import sk.akademiasovy.tipos.server.resources.Bets;
-import sk.akademiasovy.tipos.server.resources.Draws;
-import sk.akademiasovy.tipos.server.resources.Login;
+import sk.akademiasovy.tipos.Server.resources.Bets;
+import sk.akademiasovy.tipos.Server.resources.Draws;
+import sk.akademiasovy.tipos.Server.resources.Login;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;

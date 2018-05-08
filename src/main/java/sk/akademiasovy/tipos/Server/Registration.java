@@ -1,10 +1,8 @@
-package sk.akademiasovy.tipos.server;
+package sk.akademiasovy.tipos.Server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by host on 22.2.2018.
- */
+
 public class Registration{
     @JsonProperty("firstname")
     public String firstname;

@@ -1,4 +1,4 @@
-package sk.akademiasovy.tipos.server.resources;
+package sk.akademiasovy.tipos.Server.resources;
 
 
 
@@ -7,10 +7,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import sk.akademiasovy.tipos.server.Credentials;
-import sk.akademiasovy.tipos.server.Registration;
-import sk.akademiasovy.tipos.server.User;
-import sk.akademiasovy.tipos.server.db.MySQL;
+import sk.akademiasovy.tipos.Server.Credentials;
+import sk.akademiasovy.tipos.Server.Registration;
+import sk.akademiasovy.tipos.Server.User;
+import sk.akademiasovy.tipos.Server.db.MySQL;
 
 /**
  * Created by host on 20.2.2018.

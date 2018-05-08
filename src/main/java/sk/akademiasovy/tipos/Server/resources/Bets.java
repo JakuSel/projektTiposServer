@@ -1,10 +1,10 @@
-package sk.akademiasovy.tipos.server.resources;
+package sk.akademiasovy.tipos.Server.resources;
 
 import org.eclipse.jetty.util.DateCache;
-import sk.akademiasovy.tipos.server.Credentials;
-import sk.akademiasovy.tipos.server.Ticket;
-import sk.akademiasovy.tipos.server.User;
-import sk.akademiasovy.tipos.server.db.MySQL;
+import sk.akademiasovy.tipos.Server.Credentials;
+import sk.akademiasovy.tipos.Server.Ticket;
+import sk.akademiasovy.tipos.Server.User;
+import sk.akademiasovy.tipos.Server.db.MySQL;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,9 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-/**
- * Created by host on 22.2.2018.
- */
 @Path("/bets")
 public class Bets {
 

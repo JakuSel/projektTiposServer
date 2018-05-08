@@ -1,4 +1,4 @@
-package sk.akademiasovy.tipos.server;
+package sk.akademiasovy.tipos.Server;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;

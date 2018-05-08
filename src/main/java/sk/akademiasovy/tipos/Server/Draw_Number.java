@@ -1,10 +1,8 @@
-package sk.akademiasovy.tipos.server;
+package sk.akademiasovy.tipos.Server;
 
 import java.util.Date;
 
-/**
- * Created by host on 6.3.2018.
- */
+
 public class Draw_Number {
    public int bet1;
     public int bet2;

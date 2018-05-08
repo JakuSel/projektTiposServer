@@ -1,9 +1,9 @@
-package sk.akademiasovy.tipos.server.db;
+package sk.akademiasovy.tipos.Server.db;
 
-import sk.akademiasovy.tipos.server.Draw_Number;
-import sk.akademiasovy.tipos.server.Registration;
-import sk.akademiasovy.tipos.server.Ticket;
-import sk.akademiasovy.tipos.server.User;
+import sk.akademiasovy.tipos.Server.Draw_Number;
+import sk.akademiasovy.tipos.Server.Registration;
+import sk.akademiasovy.tipos.Server.Ticket;
+import sk.akademiasovy.tipos.Server.User;
 
 import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
 import java.sql.Connection;
@@ -13,9 +13,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by host on 20.2.2018.
- */
+
 public class MySQL {
     private Connection conn;
     private String driver = "com.mysql.jdbc.Driver";
