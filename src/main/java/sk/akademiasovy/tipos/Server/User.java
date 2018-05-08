@@ -1,29 +1,35 @@
-package sk.akademiasovy.tipos.Server;
+package sk.akademiasovy.tipos.server;
 
 import java.util.Random;
 
+/**
+ * Created by host on 20.2.2018.
+ */
 public class User {
     private String firstname;
     private String lastname;
-    private String username;
+    private String login;
     private String email;
     private String token;
 
-    public User(String firstname, String lastname, String username, String email) {
+    public User(String firstname, String lastname, String login, String email) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.username = username;
+        this.login = login;
         this.email = email;
+        generetaToken();
     }
 
-    private void generateToken(){
-        char[] text = new char[50];
-        Random random = new Random();
+    private void generetaToken() {
+        char[] text=new char[40];
+        Random random=new Random();
 
-        for (int i = 0; i < 40; i++) {
-            text[i] = (char)(random.nextInt(82)+33);
+        for(int i=0;i<40;i++){
+            text[i]=(char) (random.nextInt(26)+'A');
         }
-        token = text.toString();
+        token=String.valueOf(text);
+
+        System.out.println(token);
     }
 
     public String getFirstname() {
@@ -34,8 +40,8 @@ public class User {
         return lastname;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
     public String getEmail() {
