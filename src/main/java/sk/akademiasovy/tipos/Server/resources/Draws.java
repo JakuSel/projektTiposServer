@@ -1,7 +1,7 @@
 package sk.akademiasovy.tipos.Server.resources;
 
 import sk.akademiasovy.tipos.Server.Draw_Number;
-import sk.akademiasovy.tipos.Server.db.MySQL;
+import sk.akademiasovy.tipos.Server.db.SqlOperations;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,9 +17,9 @@ public class Draws {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDrawNumbers(@PathParam("id")  int id){
-        MySQL mySQL = new MySQL();
+        SqlOperations sqlOperations = new SqlOperations();
         System.out.println(id);
-        Draw_Number draw_number = mySQL.getDrawNumbers(id);
+        Draw_Number draw_number = sqlOperations.getDrawNumbers(id);
         if(draw_number!=null){
             String result="{\"bet1 \":"+draw_number.bet1+", ";
             result+="\"bet2 \":"+draw_number.bet2+", ";

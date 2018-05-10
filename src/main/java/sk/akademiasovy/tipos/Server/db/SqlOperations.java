@@ -12,9 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 
-public class MySQL {
+public class SqlOperations {
     private Connection conn;
     private String driver = "com.mysql.jdbc.Driver";
     private String url="jdbc:mysql://localhost:3306/tipos";
@@ -33,11 +34,10 @@ public class MySQL {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                  User user=new User(rs.getString("firstname"),rs.getString("lastname"),rs.getString("login"),rs.getString("email"));
-                 query = "UPDATE tokens SET token=? WHERE idu=?";
+                 query = "UPDATE token SET token=? WHERE idu=?";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, user.getToken());
                 ps.setInt(2,rs.getInt("id"));
-
                 ps.executeUpdate();
                 System.out.println(ps);
                 return user;
@@ -49,14 +49,15 @@ public class MySQL {
         return null;
     }
 
-    public void logout( String token) {
+    public void logout(String login, String token) {
         try {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url, this.username, this.password);
 
-            String query = "UPDATE tokens SET token=\"\" where token like ?";
+            String query = "UPDATE token SET token=\"\" where login like ? and token like ?";
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1,token);
+            ps.setString(1,login);
+            ps.setString(2,token);
             System.out.println(ps);
             ps.executeUpdate();
         }catch(Exception e){
@@ -135,7 +136,7 @@ public class MySQL {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url, this.username, this.password);
 
-            String query = "SELECT * FROM tokens Where token like ?";
+            String query = "SELECT * FROM token Where token like ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1,token);
             ResultSet rs=ps.executeQuery();
@@ -156,20 +157,18 @@ public class MySQL {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url, this.username, this.password);
 
-            String query = "INSERT INTO bets (idu) SELECT id FROM users where login like ?";
+            String query = "INSERT INTO bets(idu) SELECT id FROM users where login like ?;";
             PreparedStatement ps = conn.prepareStatement(query);
-
             ps.setString(1,ticket.login);
-            System.out.println(ps);
             ps.executeUpdate();
-            query="SELECT max(id) as max from bets where idu = (SELECT id FROM users where login like ?)";
+            query="SELECT max(id) as max from bets where idu = (SELECT id FROM users where login like ?);";
             ps = conn.prepareStatement(query);
             ps.setString(1,ticket .login);
             System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             rs.next();
             int id_bet=rs.getInt("max");
-            query = "INSERT INTO bet_details(idb,bet1, bet2, bet3, bet4,bet5) VALUES (?,?,?,?,?,?)";
+            query = "INSERT INTO bet_details(idb,bet1, bet2, bet3, bet4,bet5) VALUES (?,?,?,?,?,?);";
             ps= conn.prepareStatement(query);
             ps.setInt(1,id_bet);
             ps.setInt(2,ticket.bet1);
@@ -207,21 +206,15 @@ public class MySQL {
         return null;
     }
 
-    public List getActualTickets(String username) {
+    public List getActualTickets(String login) {
         try {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(url, this.username, this.password);
 
-            String query = "SELECT * from bets "
-                    +" INNER JOIN users ON users.id=bets.idu "
-                    +" INNER JOIN bet_details ON bets.id=bet_details.idb "
-                    +" WHERE login like ? AND draw_id IS NULL";
+            String query = "SELECT * from bets INNER JOIN users ON users.id=bets.idu INNER JOIN bet_details ON bets.id=bet_details.idb WHERE login like ? AND draw_id IS NULL;";
             PreparedStatement ps = conn.prepareStatement(query);
-
-            ps.setString(1,username);
-            System.out.println(ps);
+            ps.setString(1,login);
             ResultSet rs = ps.executeQuery();
-
             List<Ticket> list=new ArrayList<>();
             while(rs.next()){
                 int bet1=rs.getInt("bet1");
@@ -229,7 +222,9 @@ public class MySQL {
                 int bet3=rs.getInt("bet3");
                 int bet4=rs.getInt("bet4");
                 int bet5=rs.getInt("bet5");
-                Ticket ticket=new Ticket(bet1, bet2,bet3,bet4,bet5);
+                Date date=rs.getDate("date");
+                int id=rs.getInt("bets.id");
+                Ticket ticket=new Ticket(bet1, bet2,bet3,bet4,bet5,date,id);
                 list.add(ticket);
                 return list;
             }

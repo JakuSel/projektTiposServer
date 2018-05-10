@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Credentials {
-    @JsonProperty("username")
-    public String username;
+    @JsonProperty("login")
+    public String login;
 
     @JsonProperty("password")
     public String password;
@@ -13,8 +13,8 @@ public class Credentials {
     @JsonProperty("token")
     public String token;
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
     public String getPassword() {

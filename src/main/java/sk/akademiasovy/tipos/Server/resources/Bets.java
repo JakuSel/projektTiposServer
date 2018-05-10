@@ -1,16 +1,20 @@
 package sk.akademiasovy.tipos.Server.resources;
 
-import org.eclipse.jetty.util.DateCache;
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import sk.akademiasovy.tipos.Server.Credentials;
 import sk.akademiasovy.tipos.Server.Ticket;
-import sk.akademiasovy.tipos.Server.User;
-import sk.akademiasovy.tipos.Server.db.MySQL;
+import sk.akademiasovy.tipos.Server.db.SqlOperations;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.eclipse.jetty.util.DateCache;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/bets")
@@ -20,17 +24,17 @@ public class Bets {
     @Path("/new")
     @Produces(MediaType.APPLICATION_JSON)
     public Response newTicket(Ticket ticket){
-      MySQL mySQL=new MySQL();
-        boolean ret1 = mySQL.checkLogin(ticket.login);
-        boolean ret2 = mySQL.checkToken(ticket.token);
+      SqlOperations sqlOperations =new SqlOperations();
+        boolean ret1 = sqlOperations.checkLogin(ticket.login);
+        boolean ret2 = sqlOperations.checkToken(ticket.token);
         if(ret1 && ret2) {
-            System.out.println("Token and username are correct!");
-            mySQL.insertBets(ticket);
+            System.out.println("Token and login are correct!");
+            sqlOperations.insertBets(ticket);
             return Response.status(201).build();
         }
         else
         {
-            System.out.println("Invalid username or token");
+            System.out.println("Invalid login or token");
             return Response.status(401).build();
         }
      // return Response.status(201).build();
@@ -40,17 +44,35 @@ public class Bets {
     @Path("/actual")
     @Produces(MediaType.APPLICATION_JSON)
     public Response newTicket(Credentials credentials) {
-        MySQL mySQL = new MySQL();
-        boolean ret1 = mySQL.checkLogin(credentials.username);
+        SqlOperations mySQL = new SqlOperations();
+        boolean ret1 = mySQL.checkLogin(credentials.login);
         boolean ret2 = mySQL.checkToken(credentials.token);
-        if(ret1 && ret2) {
-            List<Ticket> tickets;
-            tickets= mySQL.getActualTickets(credentials.username);
-            Response.ok().build();
-        }
-        else return Response.status(401).build();
+        if (ret1 && ret2) {
+            List <Ticket>tickets = mySQL.getActualTickets(credentials.login);
+            JSONArray obj = new JSONArray();
+            for (Ticket ticket : tickets) {
+                String result;
+                result = "{\"bet1\":\"" + ticket.bet1 + "\" , ";
+                result += "\"bet2\":\"" + ticket.bet2 + "\" , ";
+                result += "\"bet3\":\"" + ticket.bet3 + "\" , ";
+                result += "\"bet4\":\"" + ticket.bet4 + "\" , ";
+                result += "\"bet5\":\"" + ticket.bet5 + "\" , ";
+                result += "\"login\":\"" + credentials.login + "\" , ";
+                result += "\"id\":\"" + ticket.getId() + "\"}";
 
+                System.out.println(result);
+                return Response.ok(result, MediaType.APPLICATION_JSON_TYPE).build();
 
+            }
+            /*
+            JSONObject result = new JSONObject();
+            result.put("tickets",obj);
+            System.out.println(result.toJSONString());
+            return  Response.ok(result,MediaType.APPLICATION_JSON_TYPE).build();
+  */
+        } else
+            return Response.status(401).build();
         return null;
+
     }
 }
